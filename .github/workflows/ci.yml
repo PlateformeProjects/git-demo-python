@@ -8,11 +8,10 @@ on:
 
 jobs:
   test:
-    name: CI Tests   
+    name: CI Tests   # pour que github interprete comme check
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout code 
         uses: actions/checkout@v4
 
       - name: Set up Python
