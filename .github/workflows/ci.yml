@@ -11,7 +11,7 @@ jobs:
     name: CI Tests # pour que git le voit comme check PR
     runs-on: ubuntu-latest
     outputs:
-      test-result: ${{ steps.run-tests.outcome }}
+      test-result: ${{ steps.set-test-result.outputs.result }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,6 +29,15 @@ jobs:
         run: |
           pytest -vv
         continue-on-error: true
+
+      - name: Set test result
+        id: set-test-result
+        run: |
+          if [ "${{ steps.run-tests.outcome }}" == "success" ]; then
+            echo "result=SUCCESS" >> $GITHUB_OUTPUT
+          else
+            echo "result=FAILURE" >> $GITHUB_OUTPUT
+          fi
 
   notify_pull_request:
     if: github.event_name == 'pull_request'
