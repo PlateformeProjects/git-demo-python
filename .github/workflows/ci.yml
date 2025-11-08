@@ -32,7 +32,7 @@ jobs:
         uses: SimonScholz/google-chat-action@main
         with:
           webhookUrl: ${{ secrets.GOOGLE_CHAT_URL }}
-          title: Un pull request sur le projet python test  ${{ secrets.GOOGLE_CHAT_URL }}! 
+          title: Une nouvelle branche a été merge sur le projet python test  ${{ secrets.GOOGLE_CHAT_URL }}! 
           subtitle: A new Merge on main !
       
         
