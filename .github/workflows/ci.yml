@@ -8,12 +8,10 @@ on:
 
 jobs:
   test:
-    name: CI Tests # pour que git le voit comme check PR
+    name: CI Tests   # pour que github interprete comme check
     runs-on: ubuntu-latest
-    outputs:
-      test-result: ${{ steps.run-tests.outcome }}
     steps:
-      - name: Checkout code
+      - name: Checkout code 
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -25,31 +23,16 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run tests
-        id: run-tests
-        run: |
-          pytest -vv
-        continue-on-error: true
+        run: pytest -vv
 
-  notify_pull_request:
-    if: github.event_name == 'pull_request'
-    needs: test
+  notify_pull_request_google_chat:
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Google Chat - PR
+      - name: Notify Google Chat
         uses: SimonScholz/google-chat-action@main
         with:
           webhookUrl: ${{ secrets.GOOGLE_CHAT_URL }}
-          title: "Pull Request sur ${{ github.head_ref }} par ${{ github.actor }}"
-          subtitle: "Résultat des tests: ${{ needs.test.outputs.test-result }}"
-
-  notify_merge_main:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify Google Chat - Merge
-        uses: SimonScholz/google-chat-action@main
-        with:
-          webhookUrl: ${{ secrets.GOOGLE_CHAT_URL }}
-          title: "Merge sur main par ${{ github.actor }}"
-          subtitle: "Résultat des tests: ${{ needs.test.outputs.test-result }}"
+          title: Une nouvelle branche a été merge sur le projet python test  ${{ secrets.GOOGLE_CHAT_URL }}! 
+          subtitle: A new Merge on main !
+      
+        
