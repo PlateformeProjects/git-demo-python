@@ -10,6 +10,8 @@ jobs:
   test:
     name: CI Tests   # pour que github interprete comme check
     runs-on: ubuntu-latest
+    outputs:
+      test-result: ${{ steps.set-test-result.outputs.result }}
     steps:
       - name: Checkout code 
         uses: actions/checkout@v4
@@ -25,7 +27,18 @@ jobs:
       - name: Run tests
         run: pytest -vv
 
-  notify_pull_request_google_chat:
+      - name: Set test result
+        id: set-test-result
+        run: |
+          if [ "${{ steps.run-tests.outcome }}" == "success" ]; then
+            echo "result=SUCCESS" >> $GITHUB_OUTPUT
+          else
+            echo "result=FAILURE" >> $GITHUB_OUTPUT
+          fi
+
+  notify_pull_request:
+    if: github.event_name == 'pull_request'
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Notify Google Chat
