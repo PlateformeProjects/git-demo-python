@@ -24,3 +24,15 @@ jobs:
 
       - name: Run tests
         run: pytest -vv
+
+  notify_pull_request_google_chat:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Google Chat
+        uses: SimonScholz/google-chat-action@main
+        with:
+          webhookUrl: ${{ secrets.GOOGLE_CHAT_URL }}
+          title: Un pull request sur le projet python test  ${{ secrets.GOOGLE_CHAT_URL }}! 
+          subtitle: A new Merge on main !
+      
+        
