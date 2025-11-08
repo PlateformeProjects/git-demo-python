@@ -48,7 +48,7 @@ jobs:
         uses: SimonScholz/google-chat-action@main
         with:
           webhookUrl: ${{ secrets.GOOGLE_CHAT_URL }}
-          title: "Pull Request sur ${{ github.head_ref }} par ${{ github.actor }}"
+          title: "Hey Admin une nouvelle PR : ${{ github.head_ref }} par ${{ github.actor }}"
           subtitle: "Résultat des tests: ${{ needs.test.outputs.test-result }}"
 
   notify_merge_main:
