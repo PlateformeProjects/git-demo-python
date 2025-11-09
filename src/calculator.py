@@ -17,6 +17,7 @@ def multiply(a: float, b: float) -> float:
 
 def divide(a: float, b: float) -> float:
     """Divise a par b.
+    un test
     Raises:
         ValueError: Si b est égal à 0.
     """
