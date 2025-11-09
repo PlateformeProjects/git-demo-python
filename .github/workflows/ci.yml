@@ -47,12 +47,33 @@ jobs:
     steps:
       - name: Create Trello Card
         run: |
+          # Préparer la description avec toutes les infos
+          DESCRIPTION="## 📋 Pull Request Details%0A%0A"
+          DESCRIPTION="${DESCRIPTION}**👤 Auteur**: ${{ github.actor }}%0A"
+          DESCRIPTION="${DESCRIPTION}**🔀 Branche source**: \`${{ github.head_ref }}\`%0A"
+          DESCRIPTION="${DESCRIPTION}**🎯 Branche cible**: \`${{ github.base_ref }}\`%0A"
+          DESCRIPTION="${DESCRIPTION}**📊 Statut des tests**: ${{ needs.test.outputs.test-result == 'SUCCESS' && '✅ RÉUSSI' || '❌ ÉCHOUÉ' }}%0A"
+          DESCRIPTION="${DESCRIPTION}**📝 Titre**: ${{ github.event.pull_request.title }}%0A"
+          DESCRIPTION="${DESCRIPTION}**📅 Date**: $(date +'%Y-%m-%d %H:%M:%S')%0A"
+          DESCRIPTION="${DESCRIPTION}**🔢 Nombre de commits**: ${{ github.event.pull_request.commits }}%0A"
+          DESCRIPTION="${DESCRIPTION}**📂 Fichiers modifiés**: ${{ github.event.pull_request.changed_files }}%0A"
+          DESCRIPTION="${DESCRIPTION}**➕ Lignes ajoutées**: ${{ github.event.pull_request.additions }}%0A"
+          DESCRIPTION="${DESCRIPTION}**➖ Lignes supprimées**: ${{ github.event.pull_request.deletions }}%0A%0A"
+          DESCRIPTION="${DESCRIPTION}## 💬 Description de la PR%0A%0A"
+          DESCRIPTION="${DESCRIPTION}${{ github.event.pull_request.body || 'Aucune description fournie' }}%0A%0A"
+          DESCRIPTION="${DESCRIPTION}----%0A%0A"
+          DESCRIPTION="${DESCRIPTION}🔗 [Voir la Pull Request](${{ github.event.pull_request.html_url }})%0A"
+          DESCRIPTION="${DESCRIPTION}🔗 [Voir les commits](${{ github.event.pull_request.html_url }}/commits)%0A"
+          DESCRIPTION="${DESCRIPTION}🔗 [Voir les fichiers modifiés](${{ github.event.pull_request.html_url }}/files)"
+          
+          # Créer la carte avec un titre plus descriptif
           curl -X POST "https://api.trello.com/1/cards" \
             -d "key=${{ secrets.TRELLO_API_KEY }}" \
             -d "token=${{ secrets.TRELLO_TOKEN }}" \
             -d "idList=${{ secrets.TRELLO_LIST_ID }}" \
-            -d "name=PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}" \
-            -d "desc=**Auteur**: ${{ github.actor }}%0A**Branche**: ${{ github.head_ref }}%0A**Tests**: ${{ needs.test.outputs.test-result }}%0A%0A[Voir la PR](${{ github.event.pull_request.html_url }})"
+            -d "name=🔄 PR #${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}" \
+            -d "desc=${DESCRIPTION}" \
+            -d "pos=top"
 
   notify_pull_request:
     if: github.event_name == 'pull_request'
