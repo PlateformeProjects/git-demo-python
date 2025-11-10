@@ -6,5 +6,7 @@ def main():
 	print( 'Going to substract...' )
 	
 	print( subtract(10, 5) )
+	print( subtract(10, 5) )
+ 
  
 main() 
