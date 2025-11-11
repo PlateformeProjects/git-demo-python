@@ -1,25 +1,37 @@
-
-
-def add(a: float, b: float) -> float:
-    """Additionne deux nombres."""
+def add(a, b):
+    """Addition de deux nombres
+    
+    Cette fonction additionne a et b.
+    
+    Args:
+        a: Premier nombre à additionner
+        b: Deuxième nombre à additionner
+    
+    Returns:
+        La somme de a et b
+    """
     return a + b
 
-
-def subtract(a: float, b: float) -> float:
-    """Soustrait b de a."""
+def subtract(a, b):
     return a - b
 
-
-def multiply(a: float, b: float) -> float:
-    """Multiplie deux nombres. ajoute un nouveau"""
+def multiply(a, b):
     return a * b
 
-
-def divide(a: float, b: float) -> float:
-    """Divise a par b.
+def divide(a, b):
+    """Division de a par b
+    
+    Args:
+        a: Le numérateur
+        b: Le dénominateur
+    
+    Returns:
+        Le résultat de a / b
+    
     Raises:
-        ValueError: Si b est égal à 0.
+        ZeroDivisionError: Si b vaut 0
     """
     if b == 0:
-        raise ValueError("Division par zéro impossible")
-    return a / b
+        raise ZeroDivisionError("Erreur : impossible de diviser par zéro")
+    result = a / b
+    return result
