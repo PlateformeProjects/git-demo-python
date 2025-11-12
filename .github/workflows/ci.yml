@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: CI Tests # pour que git le voit comme check PR
+    name: CI Tests # pour que github le voit comme check PR
     runs-on: ubuntu-latest
     outputs:
       test-result: ${{ steps.set-test-result.outputs.result }}
