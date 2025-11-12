@@ -6,7 +6,7 @@ def add(a: float, b: float) -> float:
 
 
 def subtract(a: float, b: float) -> float:
-    """Soustrait b de a."""
+    """Soustrait b de a...."""
     return a - b
 
 
