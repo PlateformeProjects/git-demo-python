@@ -13,7 +13,7 @@ Projet de démonstration Python avec :
 git clone git@github.com:PlateformeProjects/git-demo-python.git
 cd git-demo-python
 pip install -r requirements.txt
-pytest -vv
+
 ```
 
 ## Structure

@@ -2,7 +2,7 @@
 
 def add(a: float, b: float) -> float:
     """Additionne deux nombres."""
-    return a + b
+    return a * b
 
 
 def subtract(a: float, b: float) -> float:
@@ -23,3 +23,8 @@ def divide(a: float, b: float) -> float:
     if b == 0:
         raise ValueError("Division par zéro impossible")
     return a / b
+
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial(n-1)
